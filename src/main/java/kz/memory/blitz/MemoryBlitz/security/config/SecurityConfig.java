@@ -16,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
@@ -39,12 +41,17 @@ public class SecurityConfig extends SecurityConfigurerAdapter{
                                 .anyRequest().denyAll()
 
                 )
+//                .formLogin(withDefaults());
+        .formLogin(form -> form
+                .loginPage("/login")
+                .permitAll()
+        );
 //                .formLogin(formLogin ->
 //                        formLogin
 //                                .loginPage("/login")
 //                                .permitAll())
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                .httpBasic(Customizer.withDefaults());
+//                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                //.httpBasic(withDefaults());
 
         return http.build();
     }

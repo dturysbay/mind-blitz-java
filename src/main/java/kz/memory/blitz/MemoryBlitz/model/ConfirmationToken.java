@@ -1,7 +1,6 @@
 package kz.memory.blitz.MemoryBlitz.model;
 
 import jakarta.persistence.*;
-import kz.memory.blitz.MemoryBlitz.model.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,13 +12,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 public class ConfirmationToken {
-    @Id
     @SequenceGenerator(
             name = "confirmation_token_sequence",
             sequenceName = "confirmation_token_sequence",
             allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "confirmation_token_sequence")
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "confirmation_token_sequence"
+    )
     private Long id;
     @Column(nullable = false)
     private String token;
@@ -27,8 +29,9 @@ public class ConfirmationToken {
     private LocalDateTime createdAt;
     @Column(nullable = false)
     private LocalDateTime expiresAt;
-//    @Column(nullable = false)
-//    private LocalDateTime confirmedAt;
+
+    private LocalDateTime confirmedAt;
+
     @ManyToOne
     @JoinColumn(
             nullable = false,
